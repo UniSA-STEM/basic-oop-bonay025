@@ -1,8 +1,8 @@
 """
 File: main.py
-Description: <A brief description of this Python module.>
-Author: <full name>
-ID: <student_id>
-Username: <username>
+Description: This module holds the test code for the assessment.
+Author: Amelia Bond
+ID: 110457542
+Username: bonay025
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
