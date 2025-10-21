@@ -49,7 +49,14 @@ class Hacker:
 
     #def encrypt_asset(self, asset):
 
-    #def upgrade_rig(self):
+    def upgrade_rig(self):
+        if self.__rig is None:
+            print("You must first acquire a rig.")
+        elif "Hardware Patch" not in self.__inventory:
+            print("You must first acquire a Hardware Patch.")
+        else:
+            self.__inventory.remove("Hardware Patch")
+            Rig.upgrade(self.__rig)
 
     #def store_asset(self):
 
@@ -64,9 +71,8 @@ class Hacker:
 
     def __str__(self):
         return (f"Name: {self.__name} \n"
-                f"Rig: {Rig.get_name(self.__rig)}\n"
+                f"Rig: {self.__rig}\n"
                 f"Trace Level: {self.__trace_level} \n"
                 f"Inventory: {self.__inventory}")
 
-hacker = Hacker("Hacker")
-hacker.scan_inventory("CryptoToken")
+

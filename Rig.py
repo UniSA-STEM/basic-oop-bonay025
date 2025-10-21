@@ -13,10 +13,12 @@ class Rig:
     def __init__(self, name):
         self.__name = name
         self.__damage_counter = 0
+        self.__max_damage = 2
         self.__broken_state = False
         self.__storage = [Asset.get_name(Asset("Data Spike", "Used in battles.", False)),
                           Asset.get_name(Asset("Data Spike", "Used in battles.", False)),
                           Asset.get_name(Asset("Removable Drive", "Found in Rigs and used for extraction", False))]
+        self.__storage_space = 4
         self.__upgrade_level = 0
 
     def get_name(self):
@@ -33,6 +35,21 @@ class Rig:
 
     def get_upgrade_level(self):
         return self.__upgrade_level
+
+    def repair(self):
+        if "CryptoToken" not in self.__storage:
+            print(f"You need a CryptoToken to repair the Rig.")
+        else:
+            if self.__broken_state:
+                self.__broken_state = False
+                self.__damage_counter = 0
+            else:
+                print(f"Rig is not broken. No repair needed.")
+
+    def upgrade(self):
+        self.__upgrade_level += 1
+        self.__max_damage += 2
+        self.__storage_space += 1
 
     def __str__(self):
         return (f"{self.__name} \n"
