@@ -6,6 +6,7 @@ ID: 110457542
 Username: bonay025
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
+from Asset import Asset
 
 class Rig:
     """This class represents a Rig(computer) object."""
@@ -13,7 +14,9 @@ class Rig:
         self.__name = name
         self.__damage_counter = 0
         self.__broken_state = False
-        self.__storage = []
+        self.__storage = [Asset.get_name(Asset("Data Spike", "Used in battles.", False)),
+                          Asset.get_name(Asset("Data Spike", "Used in battles.", False)),
+                          Asset.get_name(Asset("Removable Drive", "Found in Rigs and used for extraction", False))]
         self.__upgrade_level = 0
 
     def get_name(self):

@@ -20,6 +20,21 @@ class Hacker:
         self.__exposed = False
         self.__rig = None
 
+    def get_name(self):
+        return self.__name
+
+    def get_inventory(self):
+        return self.__inventory
+
+    def get_trace_level(self):
+        return self.__trace_level
+
+    def get_exposed(self):
+        return self.__exposed
+
+    def get_rig(self):
+        return self.__rig
+
     def acquire_rig(self, name):
         self.__rig = Rig(name)
         self.__inventory.remove("CryptoToken")
