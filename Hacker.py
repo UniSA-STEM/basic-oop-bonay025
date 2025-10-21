@@ -15,7 +15,7 @@ class Hacker:
     """This class represents a Hacker object."""
     def __init__(self, name):
         self.__name = name
-        self.__inventory = [Asset.get_name(Asset("CryptoToken", "Used to acquire or repair rigs", False))]
+        self.__inventory = [Asset.get_name(Asset("CryptoToken", "Used to acquire or repair rigs"))]
         self.__trace_level = 0
         self.__exposed = False
         self.__rig = None

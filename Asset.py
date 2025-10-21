@@ -8,10 +8,10 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
 class Asset:
-    def __init__(self, name, description, encrypted):
+    def __init__(self, name, description):
         self.__name = name
         self.__description = description
-        self.__encrypted = encrypted
+        self.__encrypted = False
 
     def get_name(self):
         return self.__name

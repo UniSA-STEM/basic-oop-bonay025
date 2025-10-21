@@ -6,6 +6,7 @@ ID: 110457542
 Username: bonay025
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
+import random
 from Asset import Asset
 
 class Rig:
@@ -15,9 +16,9 @@ class Rig:
         self.__damage_counter = 0
         self.__max_damage = 2
         self.__broken_state = False
-        self.__storage = [Asset.get_name(Asset("Data Spike", "Used in battles.", False)),
-                          Asset.get_name(Asset("Data Spike", "Used in battles.", False)),
-                          Asset.get_name(Asset("Removable Drive", "Found in Rigs and used for extraction", False))]
+        self.__storage = [Asset.get_name(Asset("Data Spike", "Used in battles.")),
+                          Asset.get_name(Asset("Data Spike", "Used in battles.")),
+                          Asset.get_name(Asset("Removable Drive", "Found in Rigs and used for extraction"))]
         self.__storage_space = 4
         self.__upgrade_level = 0
 
@@ -50,6 +51,24 @@ class Rig:
         self.__upgrade_level += 1
         self.__max_damage += 2
         self.__storage_space += 1
+
+    def take_hits(self):
+        self.__damage_counter += 1
+        if self.__damage_counter == self.__max_damage:
+            self.__broken_state = True
+
+    def generate_asset(self):
+        list_assets = [Asset("CryptoToken", "Used to acquire or repair rigs."),
+                       Asset("Data Spike", "Used in battles."),
+                       Asset("Removable Drive", "Found in Rigs and used for extraction."),
+                       Asset("Security Chip", "Used to encrypt or decrypt assets."),
+                       Asset("Hardware Patch", "Used to upgrade rigs.")]
+        asset = random.choice(list_assets)
+        self.__storage.append(Asset.get_name(asset))
+
+    #def store_asset(self):
+
+    #def release_asset(self):
 
     def __str__(self):
         return (f"{self.__name} \n"
