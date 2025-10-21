@@ -39,9 +39,34 @@ class Hacker:
         self.__rig = Rig(name)
         self.__inventory.remove("CryptoToken")
 
+    def increase_trace_level(self):
+        self.__trace_level += 1
+        if self.__trace_level > 5:
+            self.__exposed = True
+
+    #def launch_data_spike(self):
+        #Rig.__storage.remove("Data Spike")
+
+    #def encrypt_asset(self, asset):
+
+    #def upgrade_rig(self):
+
+    #def store_asset(self):
+
+    #def retrieve_asset(self):
+
+    def scan_inventory(self, name):
+        for asset in self.__inventory:
+            if asset == name:
+                self.__inventory.remove(asset)
+                print(asset)
+
+
     def __str__(self):
         return (f"Name: {self.__name} \n"
                 f"Rig: {Rig.get_name(self.__rig)}\n"
                 f"Trace Level: {self.__trace_level} \n"
                 f"Inventory: {self.__inventory}")
 
+hacker = Hacker("Hacker")
+hacker.scan_inventory("CryptoToken")
