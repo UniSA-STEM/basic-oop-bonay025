@@ -44,8 +44,12 @@ class Hacker:
         if self.__trace_level > 5:
             self.__exposed = True
 
-    #def launch_data_spike(self):
-        #Rig.__storage.remove("Data Spike")
+    def launch_data_spike(self, rig):
+        storage = self.__rig.get_storage()
+        if "Data Spike" not in storage:
+            print(f"You need a Data Spike in your Rig to launch data spike.")
+        else:
+            rig.take_hit()
 
     #def encrypt_asset(self, asset):
 
@@ -59,11 +63,11 @@ class Hacker:
             Rig.upgrade(self.__rig)
 
     def store_asset(self, asset):
-        self.__inventory.remove(asset.name)
+        self.__inventory.remove(asset)
         Rig.release_asset(asset)
 
     def retrieve_asset(self, asset):
-        self.__inventory.append(asset.name)
+        self.__inventory.append(asset)
         Rig.store_asset(asset)
 
 

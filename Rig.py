@@ -8,7 +8,6 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 """
 import random
 from Asset import Asset
-from Hacker import Hacker
 
 class Rig:
     """This class represents a Rig(computer) object."""
@@ -17,9 +16,9 @@ class Rig:
         self.__damage_counter = 0
         self.__max_damage = 2
         self.__broken_state = False
-        self.__storage = [Asset.get_name(Asset("Data Spike", "Used in battles.")),
-                          Asset.get_name(Asset("Data Spike", "Used in battles.")),
-                          Asset.get_name(Asset("Removable Drive", "Found in Rigs and used for extraction"))]
+        self.__storage = [Asset("Data Spike", "Used in battles."),
+                          Asset("Data Spike", "Used in battles."),
+                          Asset("Removable Drive", "Found in Rigs and used for extraction")]
         self.__storage_space = 4
         self.__upgrade_level = 0
 
@@ -53,7 +52,7 @@ class Rig:
         self.__max_damage += 2
         self.__storage_space += 1
 
-    def take_hits(self):
+    def take_hit(self):
         self.__damage_counter += 1
         if self.__damage_counter == self.__max_damage:
             self.__broken_state = True
@@ -67,16 +66,19 @@ class Rig:
         asset = random.choice(list_assets)
         self.__storage.append(Asset.get_name(asset))
 
-    def store_asset(self, asset):
-        self.__storage.remove(asset)
-        Hacker.retrieve_asset(asset)
+    #def store_asset(self, asset):
+        #self.__storage.remove(asset)
+        #Hacker.retrieve_asset(asset)
 
-    def release_asset(self, asset):
-        self.__storage.append(asset)
-        Hacker.store_asset(asset)
+    #def release_asset(self, asset):
+        #self.__storage.append(asset)
+        #Hacker.store_asset(asset)
 
     def __str__(self):
+        str_storage = ""
+        for asset in self.__storage:
+            str_storage += f"{asset.get_name()} \n"
         return (f"{self.__name} \n"
                 f"{self.__broken_state} \n"
                 f"{self.__upgrade_level} \n"
-                f"{self.__storage} \n")
+                f"{str_storage} \n")
