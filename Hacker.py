@@ -15,7 +15,7 @@ class Hacker:
     """This class represents a Hacker object."""
     def __init__(self, name):
         self.__name = name
-        self.__inventory = [Asset.get_name(Asset("CryptoToken", "Used to acquire or repair rigs"))]
+        self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]
         self.__trace_level = 0
         self.__exposed = False
         self.__rig = None
@@ -37,7 +37,9 @@ class Hacker:
 
     def acquire_rig(self, name):
         self.__rig = Rig(name)
-        self.__inventory.remove("CryptoToken")
+        for asset in self.__inventory:
+            if asset.get_name() == "CryptoToken":
+                self.__inventory.remove(asset)
 
     def increase_trace_level(self):
         self.__trace_level += 1
@@ -45,18 +47,27 @@ class Hacker:
             self.__exposed = True
 
     def launch_data_spike(self, rig):
-        storage = self.__rig.get_storage()
-        if "Data Spike" not in storage:
+        storage = []
+        for asset in self.__rig.get_storage():
+            storage.append(asset.get_name())
+        print(storage)
+        if 'Data Spike' not in storage:
             print(f"You need a Data Spike in your Rig to launch data spike.")
-        else:
-            rig.take_hit()
+        #else:
+            #rig.take_hit()
 
-    #def encrypt_asset(self, asset):
+    def encrypt_asset(self, asset):
+        if asset not in self.__inventory:
+            print(f"You don't have a {asset.get_name()} to encrypt.")
+        elif "Security Chip" not in self.__inventory:
+            print(f"You need a Security Chip to encrypt.")
+        else:
+            asset.set_encrypted(True)
 
     def upgrade_rig(self):
         if self.__rig is None:
             print("You must first acquire a rig.")
-        elif "Hardware Patch" not in self.__inventory:
+        elif Asset.get_name() == "Hardware Patch" not in self.__inventory:
             print("You must first acquire a Hardware Patch.")
         else:
             self.__inventory.remove("Hardware Patch")
@@ -64,24 +75,36 @@ class Hacker:
 
     def store_asset(self, asset):
         self.__inventory.remove(asset)
-        Rig.release_asset(asset)
+        self.__rig.release_asset(asset)
 
     def retrieve_asset(self, asset):
-        self.__inventory.append(asset)
-        Rig.store_asset(asset)
+        storage = self.__rig.get_storage()
+        print(storage)
+        if asset not in storage:
+            print(f"You need a {asset} in your Rig to retrieve it.")
+        else:
+            self.__rig.store_asset(asset)
 
 
     def scan_inventory(self, name):
         for asset in self.__inventory:
-            if asset == name:
+            if asset.get_name() == name:
                 self.__inventory.remove(asset)
                 print(asset)
 
 
     def __str__(self):
+        str_inventory = ""
+        for asset in self.__inventory:
+            str_inventory += asset.get_name() + "\n"
         return (f"Name: {self.__name} \n"
                 f"Rig: {self.__rig}\n"
                 f"Trace Level: {self.__trace_level} \n"
-                f"Inventory: {self.__inventory}")
+                f"Inventory: {str_inventory}")
+
+hacker = Hacker("Hacker")
+print(hacker)
+hacker.acquire_rig("ben")
+print(hacker)
 
 

@@ -68,11 +68,9 @@ class Rig:
 
     #def store_asset(self, asset):
         #self.__storage.remove(asset)
-        #Hacker.retrieve_asset(asset)
 
     #def release_asset(self, asset):
         #self.__storage.append(asset)
-        #Hacker.store_asset(asset)
 
     def __str__(self):
         str_storage = ""
@@ -82,3 +80,4 @@ class Rig:
                 f"{self.__broken_state} \n"
                 f"{self.__upgrade_level} \n"
                 f"{str_storage} \n")
+

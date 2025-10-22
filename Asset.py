@@ -22,6 +22,9 @@ class Asset:
     def get_encrypted(self):
         return self.__encrypted
 
+    def set_encrypted(self, encrypted):
+        self.__encrypted = encrypted
+
     def __str__(self):
         if self.__encrypted:
             return f"{self.__name}: {self.__description} [Encrypted]"
