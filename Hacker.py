@@ -58,9 +58,14 @@ class Hacker:
             self.__inventory.remove("Hardware Patch")
             Rig.upgrade(self.__rig)
 
-    #def store_asset(self):
+    def store_asset(self, asset):
+        self.__inventory.remove(asset.name)
+        Rig.release_asset(asset)
 
-    #def retrieve_asset(self):
+    def retrieve_asset(self, asset):
+        self.__inventory.append(asset.name)
+        Rig.store_asset(asset)
+
 
     def scan_inventory(self, name):
         for asset in self.__inventory:

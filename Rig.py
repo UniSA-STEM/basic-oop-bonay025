@@ -8,6 +8,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 """
 import random
 from Asset import Asset
+from Hacker import Hacker
 
 class Rig:
     """This class represents a Rig(computer) object."""
@@ -66,9 +67,13 @@ class Rig:
         asset = random.choice(list_assets)
         self.__storage.append(Asset.get_name(asset))
 
-    #def store_asset(self):
+    def store_asset(self, asset):
+        self.__storage.remove(asset)
+        Hacker.retrieve_asset(asset)
 
-    #def release_asset(self):
+    def release_asset(self, asset):
+        self.__storage.append(asset)
+        Hacker.store_asset(asset)
 
     def __str__(self):
         return (f"{self.__name} \n"
