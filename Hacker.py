@@ -74,16 +74,14 @@ class Hacker:
             Rig.upgrade(self.__rig)
 
     def store_asset(self, asset):
-        self.__inventory.remove(asset)
+        for item in self.__inventory:
+            if item.get_name() == asset.get_name():
+                self.__inventory.remove(item)
         self.__rig.release_asset(asset)
 
     def retrieve_asset(self, asset):
-        storage = self.__rig.get_storage()
-        print(storage)
-        if asset not in storage:
-            print(f"You need a {asset} in your Rig to retrieve it.")
-        else:
-            self.__rig.store_asset(asset)
+        self.__inventory.append(asset)
+        self.__rig.store_asset(asset)
 
 
     def scan_inventory(self, name):
@@ -100,11 +98,13 @@ class Hacker:
         return (f"Name: {self.__name} \n"
                 f"Rig: {self.__rig}\n"
                 f"Trace Level: {self.__trace_level} \n"
-                f"Inventory: {str_inventory}")
+                f"Inventory: {str_inventory} \n"
+                f"")
 
 hacker = Hacker("Hacker")
+hacker.acquire_rig("CryptoToken")
 print(hacker)
-hacker.acquire_rig("ben")
+hacker.retrieve_asset(Asset("Data Spike", "Used in battles."))
 print(hacker)
-
-
+hacker.store_asset(Asset("Data Spike", "Used in battles."))
+print(hacker)
