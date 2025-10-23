@@ -115,8 +115,16 @@ class Hacker:
         str_inventory = ""
         for asset in self.__inventory:
             str_inventory += f"{asset} \n"
+        str_rig = ""
+        if self.__rig is None:
+            str_rig = "None"
+        else:
+            str_rig = self.__rig.get_name()
         return (f"Name: {self.__name} \n"
-                f"Rig: {self.__rig}\n"
+                f"Rig: {str_rig}\n"
                 f"Trace Level: {self.__trace_level} \n"
-                f"Inventory: {str_inventory} \n"
+                f"Inventory: \n "
+                f"---------- \n"
+                f"{str_inventory} "
+                f"---------- \n"
                 f"")

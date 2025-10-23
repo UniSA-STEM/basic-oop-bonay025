@@ -82,17 +82,21 @@ class Rig:
 
     def condition(self):
         if self.__damage_counter == 0:
-            print(f"Pristine (Level {self.__upgrade_level})")
+            return f"Pristine (Level {self.__upgrade_level})"
         elif self.__broken_state:
-            print(f"Broken (Level {self.__upgrade_level})")
+            return f"Broken (Level {self.__upgrade_level})"
         else:
-            print(f"Damaged (Level {self.__upgrade_level})")
+            return f"Damaged (Level {self.__upgrade_level})"
 
     def __str__(self):
         str_storage = ""
         for asset in self.__storage:
             str_storage += f"{asset} \n"
-        return (f"{self.__name} \n"
-                f"{self.__broken_state} {self.__damage_counter}\n"
-                f"{self.__upgrade_level} \n"
-                f"{str_storage} \n")
+        return (f"Name: {self.__name} \n"
+                f"Condition: {self.condition()} \n"
+                f"Upgrade Level: {self.__upgrade_level} \n"
+                f"Storage: \n"
+                f"---------- \n"
+                f"{str_storage}"
+                f"---------- \n"
+                f"")
