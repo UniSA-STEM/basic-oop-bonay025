@@ -69,12 +69,10 @@ class Hacker:
 
 
     def encrypt_asset(self, asset):
-        if asset not in self.__inventory:
-            print(f"You don't have a {asset.get_name()} to encrypt.")
-        elif "Security Chip" not in self.__inventory:
-            print(f"You need a Security Chip to encrypt.")
-        else:
-            asset.set_encrypted(True)
+        for item in self.__inventory:
+            if item.get_name() == asset.get_name():
+                if item.get_encrypted() is False:
+                    item.set_encrypted(True)
 
     def upgrade_rig(self):
         if self.__rig is None:
@@ -122,5 +120,3 @@ class Hacker:
                 f"Trace Level: {self.__trace_level} \n"
                 f"Inventory: {str_inventory} \n"
                 f"")
-
-
