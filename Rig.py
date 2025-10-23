@@ -9,6 +9,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 import random
 from Asset import Asset
 
+
 class Rig:
     """This class represents a Rig(computer) object."""
     def __init__(self, name):
@@ -25,17 +26,11 @@ class Rig:
     def get_name(self):
         return self.__name
 
-    def get_damage_count(self):
-        return self.__damage_counter
-
     def get_broken_state(self):
         return self.__broken_state
 
     def get_storage(self):
         return self.__storage
-
-    def get_upgrade_level(self):
-        return self.__upgrade_level
 
     def repair(self):
         if self.__broken_state:
