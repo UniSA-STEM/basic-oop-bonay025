@@ -49,9 +49,14 @@ class Hacker:
         storage = []
         for asset in self.__rig.get_storage():
             storage.append(asset.get_name())
+        print(storage)
         if 'Data Spike' not in storage:
             print(f"You need a Data Spike in your Rig to launch data spike.")
         else:
+            self.retrieve_asset(Asset("Data Spike", "Used in battles."))
+            for item in self.__inventory:
+                if item.get_name() == "Data Spike":
+                    self.__inventory.remove(item)
             rig.take_hit()
             if rig.get_broken_state():
                 rig_storage = []
@@ -117,8 +122,5 @@ class Hacker:
                 f"Trace Level: {self.__trace_level} \n"
                 f"Inventory: {str_inventory} \n"
                 f"")
-
-hacker = Hacker("Hacker")
-hacker.acquire_rig("ben")
 
 
