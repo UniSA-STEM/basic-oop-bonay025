@@ -14,8 +14,7 @@ class Hacker:
     """This class represents a Hacker object."""
     def __init__(self, name):
         self.__name = name
-        self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs."),
-                            Asset("CryptoToken", "Used to acquire or repair rigs.")]
+        self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]
         self.__trace_level = 0
         self.__exposed = False
         self.__rig = None
@@ -50,11 +49,19 @@ class Hacker:
         storage = []
         for asset in self.__rig.get_storage():
             storage.append(asset.get_name())
-        print(storage)
         if 'Data Spike' not in storage:
             print(f"You need a Data Spike in your Rig to launch data spike.")
-        #else:
-            #rig.take_hit()
+        else:
+            rig.take_hit()
+            if rig.get_broken_state():
+                rig_storage = []
+                for item in rig.get_storage():
+                    rig_storage.append(item)
+                for asset in rig_storage:
+                    if asset.get_encrypted() is False:
+                        rig.store_asset(asset)
+                        self.__inventory.append(asset)
+
 
     def encrypt_asset(self, asset):
         if asset not in self.__inventory:
@@ -87,11 +94,12 @@ class Hacker:
             if item.get_name() == asset.get_name():
                 self.__inventory.remove(item)
         self.__rig.release_asset(asset)
+        self.increase_trace_level()
 
     def retrieve_asset(self, asset):
         self.__inventory.append(asset)
         self.__rig.store_asset(asset)
-
+        self.increase_trace_level()
 
     def scan_inventory(self, name):
         for asset in self.__inventory:
@@ -112,7 +120,5 @@ class Hacker:
 
 hacker = Hacker("Hacker")
 hacker.acquire_rig("ben")
-print(hacker)
-hacker.repair_rig()
-print(hacker)
+
 

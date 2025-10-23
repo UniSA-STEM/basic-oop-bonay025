@@ -13,9 +13,9 @@ class Rig:
     """This class represents a Rig(computer) object."""
     def __init__(self, name):
         self.__name = name
-        self.__damage_counter = 2
+        self.__damage_counter = 0
         self.__max_damage = 2
-        self.__broken_state = True
+        self.__broken_state = False
         self.__storage = [Asset("Data Spike", "Used in battles."),
                           Asset("Data Spike", "Used in battles."),
                           Asset("Removable Drive", "Found in Rigs and used for extraction.")]
