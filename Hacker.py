@@ -13,6 +13,7 @@ from Rig import Rig
 
 class Hacker:
     """This class represents a Hacker object."""
+
     def __init__(self, name):
         self.__name = name
         self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]
@@ -53,9 +54,12 @@ class Hacker:
                         rig.store_asset(asset)
                         self.__inventory.append(asset)
 
-
     def encrypt_asset(self, asset):
         for item in self.__inventory:
+            if item.get_name() == asset.get_name():
+                if item.get_encrypted() is False:
+                    item.set_encrypted(True)
+        for item in self.__rig.get_storage():
             if item.get_name() == asset.get_name():
                 if item.get_encrypted() is False:
                     item.set_encrypted(True)
@@ -96,7 +100,6 @@ class Hacker:
                 self.__inventory.remove(asset)
                 print(asset)
 
-
     def __str__(self):
         str_inventory = ""
         for asset in self.__inventory:
@@ -107,7 +110,7 @@ class Hacker:
         else:
             str_rig = self.__rig.get_name()
         return (f"Name: {self.__name} \n"
-                f"Rig: {str_rig}\n"
+                f"Rig: {self.__rig}\n"
                 f"Trace Level: {self.__trace_level} \n"
                 f"Inventory: \n "
                 f"---------- \n"
