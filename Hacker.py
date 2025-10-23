@@ -6,7 +6,6 @@ ID: 110457542
 Username: bonay025
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
-from os import remove
 
 from Asset import Asset
 from Rig import Rig
@@ -15,7 +14,8 @@ class Hacker:
     """This class represents a Hacker object."""
     def __init__(self, name):
         self.__name = name
-        self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs.")]
+        self.__inventory = [Asset("CryptoToken", "Used to acquire or repair rigs."),
+                            Asset("CryptoToken", "Used to acquire or repair rigs.")]
         self.__trace_level = 0
         self.__exposed = False
         self.__rig = None
@@ -67,13 +67,20 @@ class Hacker:
     def upgrade_rig(self):
         if self.__rig is None:
             print("You must first acquire a rig.")
-        elif Asset("Hardware Patch", "Used to upgrade rigs.") not in self.__inventory:
-            print("You need a Hardware Patch in you inventory to upgrade rigs.")
         else:
             for item in self.__inventory:
                 if item.get_name() == "Hardware Patch":
                     self.__inventory.remove(item)
             Rig.upgrade(self.__rig)
+
+    def repair_rig(self):
+        if self.__rig is None:
+            print("You must first acquire a rig.")
+        else:
+            for item in self.__inventory:
+                if item.get_name() == "CryptoToken":
+                    self.__inventory.remove(item)
+            Rig.repair(self.__rig)
 
     def store_asset(self, asset):
         for item in self.__inventory:
@@ -96,7 +103,7 @@ class Hacker:
     def __str__(self):
         str_inventory = ""
         for asset in self.__inventory:
-            str_inventory += asset.get_name() + "\n"
+            str_inventory += f"{asset} \n"
         return (f"Name: {self.__name} \n"
                 f"Rig: {self.__rig}\n"
                 f"Trace Level: {self.__trace_level} \n"
@@ -104,7 +111,8 @@ class Hacker:
                 f"")
 
 hacker = Hacker("Hacker")
-hacker.acquire_rig("CryptoToken")
-
-hacker.upgrade_rig()
+hacker.acquire_rig("ben")
+print(hacker)
+hacker.repair_rig()
+print(hacker)
 

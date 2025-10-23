@@ -13,12 +13,12 @@ class Rig:
     """This class represents a Rig(computer) object."""
     def __init__(self, name):
         self.__name = name
-        self.__damage_counter = 0
+        self.__damage_counter = 2
         self.__max_damage = 2
-        self.__broken_state = False
+        self.__broken_state = True
         self.__storage = [Asset("Data Spike", "Used in battles."),
                           Asset("Data Spike", "Used in battles."),
-                          Asset("Removable Drive", "Found in Rigs and used for extraction")]
+                          Asset("Removable Drive", "Found in Rigs and used for extraction.")]
         self.__storage_space = 4
         self.__upgrade_level = 0
 
@@ -38,13 +38,11 @@ class Rig:
         return self.__upgrade_level
 
     def repair(self):
-        print(f"You need a CryptoToken to repair the Rig.")
-        #else:
-            #if self.__broken_state:
-                #self.__broken_state = False
-                #self.__damage_counter = 0
-            #else:
-                #print(f"Rig is not broken. No repair needed.")
+        if self.__broken_state:
+            self.__broken_state = False
+            self.__damage_counter = 0
+        else:
+            print(f"{self.__name} is not broken. It does not need repairing.")
 
     def upgrade(self):
         self.__upgrade_level += 1
@@ -93,8 +91,8 @@ class Rig:
     def __str__(self):
         str_storage = ""
         for asset in self.__storage:
-            str_storage += f"{asset.get_name()} \n"
+            str_storage += f"{asset} \n"
         return (f"{self.__name} \n"
-                f"{self.__broken_state} \n"
+                f"{self.__broken_state} {self.__damage_counter}\n"
                 f"{self.__upgrade_level} \n"
                 f"{str_storage} \n")
