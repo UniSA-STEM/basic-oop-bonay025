@@ -67,10 +67,12 @@ class Hacker:
     def upgrade_rig(self):
         if self.__rig is None:
             print("You must first acquire a rig.")
-        elif Asset.get_name() == "Hardware Patch" not in self.__inventory:
-            print("You must first acquire a Hardware Patch.")
+        elif Asset("Hardware Patch", "Used to upgrade rigs.") not in self.__inventory:
+            print("You need a Hardware Patch in you inventory to upgrade rigs.")
         else:
-            self.__inventory.remove("Hardware Patch")
+            for item in self.__inventory:
+                if item.get_name() == "Hardware Patch":
+                    self.__inventory.remove(item)
             Rig.upgrade(self.__rig)
 
     def store_asset(self, asset):
@@ -103,8 +105,6 @@ class Hacker:
 
 hacker = Hacker("Hacker")
 hacker.acquire_rig("CryptoToken")
-print(hacker)
-hacker.retrieve_asset(Asset("Data Spike", "Used in battles."))
-print(hacker)
-hacker.store_asset(Asset("Data Spike", "Used in battles."))
-print(hacker)
+
+hacker.upgrade_rig()
+
