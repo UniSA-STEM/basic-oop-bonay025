@@ -38,14 +38,13 @@ class Rig:
         return self.__upgrade_level
 
     def repair(self):
-        if "CryptoToken" not in self.__storage:
-            print(f"You need a CryptoToken to repair the Rig.")
-        else:
-            if self.__broken_state:
-                self.__broken_state = False
-                self.__damage_counter = 0
-            else:
-                print(f"Rig is not broken. No repair needed.")
+        print(f"You need a CryptoToken to repair the Rig.")
+        #else:
+            #if self.__broken_state:
+                #self.__broken_state = False
+                #self.__damage_counter = 0
+            #else:
+                #print(f"Rig is not broken. No repair needed.")
 
     def upgrade(self):
         self.__upgrade_level += 1
@@ -56,6 +55,9 @@ class Rig:
         self.__damage_counter += 1
         if self.__damage_counter == self.__max_damage:
             self.__broken_state = True
+            self.__upgrade_level = 0
+            self.__max_damage = 2
+            self.__damage_counter = 0
 
     def generate_asset(self):
         list_assets = [Asset("CryptoToken", "Used to acquire or repair rigs."),
@@ -66,11 +68,27 @@ class Rig:
         asset = random.choice(list_assets)
         self.__storage.append(Asset.get_name(asset))
 
-    #def store_asset(self, asset):
-        #self.__storage.remove(asset)
+    def store_asset(self, asset):
+        if asset.get_encrypted():
+            print(f"You need to decrypt the {asset.get_name()} to move it.")
+        else:
+            for item in self.__storage:
+                if item.get_name() == asset.get_name():
+                    self.__storage.remove(item)
 
-    #def release_asset(self, asset):
-        #self.__storage.append(asset)
+    def release_asset(self, asset):
+        if asset.get_encrypted():
+            print(f"You need to decrypt the {asset.get_name()} to move it.")
+        else:
+            self.__storage.append(asset)
+
+    def condition(self):
+        if self.__damage_counter == 0:
+            print(f"Pristine (Level {self.__upgrade_level})")
+        elif self.__broken_state:
+            print(f"Broken (Level {self.__upgrade_level})")
+        else:
+            print(f"Damaged (Level {self.__upgrade_level})")
 
     def __str__(self):
         str_storage = ""
@@ -80,4 +98,3 @@ class Rig:
                 f"{self.__broken_state} \n"
                 f"{self.__upgrade_level} \n"
                 f"{str_storage} \n")
-
