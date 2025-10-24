@@ -74,10 +74,16 @@ class Hacker:
         if self.__rig is None:
             print("You must first acquire a rig.\n")
         else:
+            inventory = []
             for item in self.__inventory:
-                if item.get_name() == "Hardware Patch":
-                    self.__inventory.remove(item)
-            Rig.upgrade(self.__rig)
+                inventory.append(item.get_name())
+            if "Hardware Patch" not in inventory:
+                print(f"You need a Hardware Patch to upgrade. \n")
+            else:
+                for item in self.__inventory:
+                    if item.get_name() == "Hardware Patch":
+                        self.__inventory.remove(item)
+                Rig.upgrade(self.__rig)
 
     def repair_rig(self):
         if self.__rig is None:
@@ -118,9 +124,6 @@ class Hacker:
                 self.__rig.store_asset(asset)
             else:
                 print(f"You need to decrypt the {asset.get_name()} to move it.\n")
-
-    def generate_asset(self):
-        self.__rig.generate_asset()
 
     def scan_inventory(self, asset):
         inventory = []
