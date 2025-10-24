@@ -67,6 +67,16 @@ class Hacker:
                 if item.get_encrypted() is False:
                     item.set_encrypted(True)
 
+    def decrypt_asset(self, asset):
+        for item in self.__inventory:
+            if item.get_name() == asset.get_name():
+                if item.get_encrypted() is False:
+                    item.set_encrypted(True)
+        for item in self.__rig.get_storage():
+            if item.get_name() == asset.get_name():
+                if item.get_encrypted() is False:
+                    item.set_encrypted(True)
+
     def upgrade_rig(self):
         if self.__rig is None:
             print("You must first acquire a rig.")
