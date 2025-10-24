@@ -12,21 +12,14 @@ from Asset import Asset
 from Rig import Rig
 
 
-# Tests that the string conversion method for both encrypted and decrypted for assets
+# Tests that the string conversion method for both encrypted
+# #and decrypted for assets
 def asset_test():
-    asset = Asset("CryptoToken", "Used to acquire or repair rigs.")
+    asset = Asset("CryptoToken",
+                  "Used to acquire or repair rigs.")
     print(asset)
     asset.set_encrypted(True)
     print(asset)
-
-
-def test_rig_repair():
-    nix = Hacker("Nix")
-    nix.acquire_rig("Nova")
-    nix.repair_rig()
-    titanium = Rig("Titanium")
-    nix.launch_data_spike("Titanium")
-    print(titanium)
 
 
 # Test the store and retrieve methods
@@ -34,21 +27,21 @@ def test_rig_repair():
 # Shows the case of an asset being encrypted
 def test_store_and_retrieve():
     nix = Hacker("Nix")
-    nix.acquire_rig("Nova")
+    nova = Rig("Nova")
+    nix.acquire_rig(nova)
     print(nix)
-    nix.retrieve_asset(Asset("CryptoToken", ""))
-    nix.retrieve_asset(Asset("Data Spike", "Used in battles."))
-    nix.encrypt_asset(Asset("Data Spike", "Used in battles."))
+    nix.retrieve_asset(Asset("CryptoToken",
+                             "Used to acquire or repair rigs."))
+    nix.retrieve_asset(Asset("Data Spike",
+                             "Used in battles."))
+    nix.encrypt_asset(Asset("Data Spike",
+                            "Used in battles."))
     print(nix)
-    nix.store_asset(Asset("CryptoToken", "Used to acquire or repair rigs."))
-    nix.store_asset(Asset("Data Spike", "Used in battles."))
+    nix.store_asset(Asset("CryptoToken",
+                          "Used to acquire or repair rigs."))
+    nix.store_asset(Asset("Data Spike",
+                          "Used in battles."))
     print(nix)
-
-
-def test_encryption():
-    nix = Hacker("Nix")
-    nix.acquire_rig("Nova")
-    nix.encrypt_asset(Asset("Data Spike", "Used in battles."))
 
 
 # Tests the generation of assets
@@ -57,17 +50,77 @@ def test_generate_assets():
     nova.generate_asset()
     print(nova)
 
-    nix = Hacker("Nix")
-    nix.acquire_rig("Nova")
-    nix.generate_asset()
-
 
 # Test the scan inventory method
 # Test case of item not being in inventory
 def test_scan_inventory():
     nix = Hacker("Nix")
-    nix.acquire_rig("Nova")
-    nix.scan_inventory(Asset("Data Spike", "Used in battles."))
-    nix.retrieve_asset(Asset("Data Spike", "Used in battles."))
+    nova = Rig("Nova")
+    nix.acquire_rig(nova)
+    nix.scan_inventory(Asset("Data Spike",
+                             "Used in battles."))
+    nix.retrieve_asset(Asset("Data Spike",
+                             "Used in battles."))
     print(nix)
-    nix.scan_inventory(Asset("Data Spike", "Used in battles."))
+    nix.scan_inventory(Asset("Data Spike",
+                             "Used in battles."))
+
+
+# Tests the upgrade method
+def test_upgrade_rig():
+    nix = Hacker("Nix")
+    nova = Rig("Nova")
+    nix.acquire_rig(nova)
+    nix.upgrade_rig()
+    nova.generate_asset()
+    nix.retrieve_asset(Asset("Hardware Patch",
+                             "Used to upgrade rigs."))
+    nix.upgrade_rig()
+    print(nova)
+
+
+# Tests the repair method
+def test_repair():
+    nix = Hacker("Nix")
+    nova = Rig("Nova")
+    nix.acquire_rig(nova)
+
+    zion = Hacker("Zion")
+    titanium = Rig("Titanium")
+    zion.acquire_rig(titanium)
+
+    nix.launch_data_spike(titanium)
+    nix.launch_data_spike(titanium)
+    print(titanium)
+
+    zion.repair_rig()
+    print(titanium)
+
+
+# Test when a hackers trace level is > 5 that
+# launch data spike does not work
+def test_trace_level():
+    nix = Hacker("Nix")
+    nova = Rig("Nova")
+    nix.acquire_rig(nova)
+    nix.increase_trace_level()
+    nix.increase_trace_level()
+    nix.increase_trace_level()
+    nix.increase_trace_level()
+    nix.increase_trace_level()
+    nix.increase_trace_level()
+    print(nix)
+
+    zion = Hacker("Zion")
+    titanium = Rig("Titanium")
+    zion.acquire_rig(titanium)
+    nix.launch_data_spike(titanium)
+
+
+# Test the encryption method
+def test_encrypt():
+    nix = Hacker("Nix")
+    nova = Rig("Nova")
+    nix.acquire_rig(nova)
+    nix.encrypt_asset(Asset("Removable Drive",
+                            "Found in Rigs and used for extraction."))
