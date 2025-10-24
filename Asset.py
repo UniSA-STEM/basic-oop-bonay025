@@ -9,6 +9,8 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 
 class Asset:
+    """This class represents a digital asset."""
+
     def __init__(self, name, description):
         self.__name = name
         self.__description = description
