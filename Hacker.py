@@ -112,11 +112,20 @@ class Hacker:
             self.__rig.store_asset(asset)
             self.increase_trace_level()
 
-    def scan_inventory(self, name):
-        for asset in self.__inventory:
-            if asset.get_name() == name:
-                self.__inventory.remove(asset)
-                print(asset)
+    def generate_asset(self):
+        self.__rig.generate_asset()
+
+    def scan_inventory(self, asset):
+        inventory = []
+        for item in self.__inventory:
+            inventory.append(item.get_name())
+        if asset.get_name() not in inventory:
+            print(f"You don't have {asset.get_name()} in your inventory.")
+        else:
+            for assets in self.__inventory:
+                if asset.get_name() == assets.get_name():
+                    self.__inventory.remove(assets)
+                    print(asset)
 
     def __str__(self):
         str_inventory = ""

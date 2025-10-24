@@ -60,7 +60,7 @@ class Rig:
                        Asset("Security Chip", "Used to encrypt or decrypt assets."),
                        Asset("Hardware Patch", "Used to upgrade rigs.")]
         asset = random.choice(list_assets)
-        self.__storage.append(Asset.get_name(asset))
+        self.__storage.append(asset)
 
     def store_asset(self, asset):
         if asset.get_encrypted():
