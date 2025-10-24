@@ -12,6 +12,7 @@ from Asset import Asset
 
 class Rig:
     """This class represents a Rig(computer) object."""
+
     def __init__(self, name):
         self.__name = name
         self.__damage_counter = 0
@@ -88,10 +89,10 @@ class Rig:
         for asset in self.__storage:
             str_storage += f"{asset} \n"
         return (f"Name: {self.__name} \n"
-                f"Condition: {self.condition()} \n"
+                f"Condition: {self.__broken_state} {self.__damage_counter}\n"
                 f"Upgrade Level: {self.__upgrade_level} \n"
-                f"Storage: \n"
                 f"---------- \n"
+                f"Storage: \n"
                 f"{str_storage}"
                 f"---------- \n"
                 f"")

@@ -32,27 +32,30 @@ class Hacker:
         if self.__trace_level > 5:
             self.__exposed = True
 
-    def launch_data_spike(self, rig):
-        storage = []
-        for asset in self.__rig.get_storage():
-            storage.append(asset.get_name())
-        print(storage)
-        if 'Data Spike' not in storage:
-            print(f"You need a Data Spike in your Rig to launch data spike.")
+    def launch_data_spike(self, name):
+        rig = Rig(name)
+        if self.__rig is None:
+            print(f"{self.__name} must acquire a rig first.")
         else:
-            self.retrieve_asset(Asset("Data Spike", "Used in battles."))
-            for item in self.__inventory:
-                if item.get_name() == "Data Spike":
-                    self.__inventory.remove(item)
-            rig.take_hit()
-            if rig.get_broken_state():
-                rig_storage = []
-                for item in rig.get_storage():
-                    rig_storage.append(item)
-                for asset in rig_storage:
-                    if asset.get_encrypted() is False:
-                        rig.store_asset(asset)
-                        self.__inventory.append(asset)
+            storage = []
+            for asset in self.__rig.get_storage():
+                storage.append(asset.get_name())
+            if 'Data Spike' not in storage:
+                print(f"You need a Data Spike in your Rig to launch data spike.")
+            else:
+                self.retrieve_asset(Asset("Data Spike", "Used in battles."))
+                for item in self.__inventory:
+                    if item.get_name() == "Data Spike":
+                        self.__inventory.remove(item)
+                Rig.take_hit(rig)
+                if rig.get_broken_state():
+                    rig_storage = []
+                    for item in rig.get_storage():
+                        rig_storage.append(item)
+                    for asset in rig_storage:
+                        if asset.get_encrypted() is False:
+                            rig.store_asset(asset)
+                            self.__inventory.append(asset)
 
     def encrypt_asset(self, asset):
         for item in self.__inventory:
@@ -83,16 +86,31 @@ class Hacker:
             Rig.repair(self.__rig)
 
     def store_asset(self, asset):
+        inventory = []
         for item in self.__inventory:
-            if item.get_name() == asset.get_name():
-                self.__inventory.remove(item)
-        self.__rig.release_asset(asset)
-        self.increase_trace_level()
+            inventory.append(item.get_name())
+        if asset.get_name() not in inventory:
+            print(f"You need a {asset.get_name()} "
+                  f"in inventory to store it. \n")
+        else:
+            for item in self.__inventory:
+                if item.get_name() == asset.get_name():
+                    self.__inventory.remove(item)
+            self.__rig.release_asset(asset)
+            self.increase_trace_level()
 
     def retrieve_asset(self, asset):
-        self.__inventory.append(asset)
-        self.__rig.store_asset(asset)
-        self.increase_trace_level()
+        storage = []
+        for item in self.__rig.get_storage():
+            storage.append(item.get_name())
+        name = asset.get_name()
+        if name not in storage:
+            print(f"You need a {asset.get_name()} in "
+                  f"{self.__rig.get_name()} to retrieve it. \n")
+        else:
+            self.__inventory.append(asset)
+            self.__rig.store_asset(asset)
+            self.increase_trace_level()
 
     def scan_inventory(self, name):
         for asset in self.__inventory:
@@ -110,10 +128,10 @@ class Hacker:
         else:
             str_rig = self.__rig.get_name()
         return (f"Name: {self.__name} \n"
-                f"Rig: {self.__rig}\n"
+                f"Rig: {str_rig}\n"
                 f"Trace Level: {self.__trace_level} \n"
-                f"Inventory: \n "
                 f"---------- \n"
+                f"Inventory: \n "
                 f"{str_inventory} "
                 f"---------- \n"
                 f"")
