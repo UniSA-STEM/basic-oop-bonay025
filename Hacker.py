@@ -21,19 +21,19 @@ class Hacker:
         self.__exposed = False
         self.__rig = None
 
-    def acquire_rig(self, name):
-        self.__rig = Rig(name)
+    def acquire_rig(self, rig):
+        self.__rig = rig
         for asset in self.__inventory:
             if asset.get_name() == "CryptoToken":
                 self.__inventory.remove(asset)
+        print(f"You have acquired {self.__rig.get_name()}.\n")
 
     def increase_trace_level(self):
         self.__trace_level += 1
         if self.__trace_level > 5:
             self.__exposed = True
 
-    def launch_data_spike(self, name):
-        rig = Rig(name)
+    def launch_data_spike(self, rig):
         if self.__rig is None:
             print(f"{self.__name} must acquire a rig first.")
         else:
@@ -41,21 +41,14 @@ class Hacker:
             for asset in self.__rig.get_storage():
                 storage.append(asset.get_name())
             if 'Data Spike' not in storage:
-                print(f"You need a Data Spike in your Rig to launch data spike.")
+                print(f"You need a Data Spike in your Rig to launch data spike.\n")
             else:
+                rig.take_hit()
                 self.retrieve_asset(Asset("Data Spike", "Used in battles."))
                 for item in self.__inventory:
                     if item.get_name() == "Data Spike":
                         self.__inventory.remove(item)
-                Rig.take_hit(rig)
-                if rig.get_broken_state():
-                    rig_storage = []
-                    for item in rig.get_storage():
-                        rig_storage.append(item)
-                    for asset in rig_storage:
-                        if asset.get_encrypted() is False:
-                            rig.store_asset(asset)
-                            self.__inventory.append(asset)
+                self.increase_trace_level()
 
     def encrypt_asset(self, asset):
         for item in self.__inventory:
@@ -79,7 +72,7 @@ class Hacker:
 
     def upgrade_rig(self):
         if self.__rig is None:
-            print("You must first acquire a rig.")
+            print("You must first acquire a rig.\n")
         else:
             for item in self.__inventory:
                 if item.get_name() == "Hardware Patch":
@@ -88,7 +81,7 @@ class Hacker:
 
     def repair_rig(self):
         if self.__rig is None:
-            print("You must first acquire a rig.")
+            print("You must first acquire a rig.\n")
         else:
             for item in self.__inventory:
                 if item.get_name() == "CryptoToken":
@@ -108,9 +101,8 @@ class Hacker:
                     if item.get_encrypted() is False:
                         self.__inventory.remove(item)
                     else:
-                        print(f"You need to decrypt the {asset.get_name()} to move it.")
+                        print(f"You need to decrypt the {asset.get_name()} to move it.\n")
             self.__rig.release_asset(asset)
-            self.increase_trace_level()
 
     def retrieve_asset(self, asset):
         storage = []
@@ -124,9 +116,8 @@ class Hacker:
             if item.get_encrypted() is False:
                 self.__inventory.append(asset)
                 self.__rig.store_asset(asset)
-                self.increase_trace_level()
             else:
-                print(f"You need to decrypt the {asset.get_name()} to move it.")
+                print(f"You need to decrypt the {asset.get_name()} to move it.\n")
 
     def generate_asset(self):
         self.__rig.generate_asset()
@@ -136,7 +127,7 @@ class Hacker:
         for item in self.__inventory:
             inventory.append(item.get_name())
         if asset.get_name() not in inventory:
-            print(f"You don't have {asset.get_name()} in your inventory.")
+            print(f"You don't have {asset.get_name()} in your inventory. \n")
         else:
             for assets in self.__inventory:
                 if asset.get_name() == assets.get_name():
