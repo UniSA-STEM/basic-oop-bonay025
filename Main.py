@@ -31,12 +31,14 @@ def test_rig_repair():
 
 # Test the store and retrieve methods
 # Shows the cases of it an asset is not in storage and inventory
+# Shows the case of an asset being encrypted
 def test_store_and_retrieve():
     nix = Hacker("Nix")
     nix.acquire_rig("Nova")
     print(nix)
     nix.retrieve_asset(Asset("CryptoToken", ""))
     nix.retrieve_asset(Asset("Data Spike", "Used in battles."))
+    nix.encrypt_asset(Asset("Data Spike", "Used in battles."))
     print(nix)
     nix.store_asset(Asset("CryptoToken", "Used to acquire or repair rigs."))
     nix.store_asset(Asset("Data Spike", "Used in battles."))

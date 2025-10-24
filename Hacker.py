@@ -95,7 +95,10 @@ class Hacker:
         else:
             for item in self.__inventory:
                 if item.get_name() == asset.get_name():
-                    self.__inventory.remove(item)
+                    if item.get_encrypted() is False:
+                        self.__inventory.remove(item)
+                    else:
+                        print(f"You need to decrypt the {asset.get_name()} to move it.")
             self.__rig.release_asset(asset)
             self.increase_trace_level()
 
@@ -108,9 +111,12 @@ class Hacker:
             print(f"You need a {asset.get_name()} in "
                   f"{self.__rig.get_name()} to retrieve it. \n")
         else:
-            self.__inventory.append(asset)
-            self.__rig.store_asset(asset)
-            self.increase_trace_level()
+            if item.get_encrypted() is False:
+                self.__inventory.append(asset)
+                self.__rig.store_asset(asset)
+                self.increase_trace_level()
+            else:
+                print(f"You need to decrypt the {asset.get_name()} to move it.")
 
     def generate_asset(self):
         self.__rig.generate_asset()
