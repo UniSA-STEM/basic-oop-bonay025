@@ -18,9 +18,12 @@ class Rig:
         self.__damage_counter = 0
         self.__max_damage = 2
         self.__broken_state = False
-        self.__storage = [Asset("Data Spike", "Used in battles."),
-                          Asset("Data Spike", "Used in battles."),
-                          Asset("Removable Drive", "Found in Rigs and used for extraction.")]
+        self.__storage = [Asset("Data Spike",
+                                "Used in battles."),
+                          Asset("Data Spike",
+                                "Used in battles."),
+                          Asset("Removable Drive",
+                                "Found in Rigs and used for extraction.")]
         self.__storage_space = 4
         self.__upgrade_level = 0
 
@@ -34,18 +37,22 @@ class Rig:
         return self.__storage
 
     def repair(self):
+        """Changes the broken state and resets damage counter."""
         if self.__broken_state:
             self.__broken_state = False
             self.__damage_counter = 0
         else:
-            print(f"{self.__name} is not broken. It does not need repairing.\n")
+            print(f"{self.__name} is not broken. "
+                  f"It does not need repairing.\n")
 
     def upgrade(self):
+        """Increase upgrade level, maximum damage and storage space."""
         self.__upgrade_level += 1
         self.__max_damage += 2
         self.__storage_space += 1
 
     def take_hit(self):
+        """Increases damage and changes to broken if max reached."""
         self.__damage_counter += 1
         if self.__damage_counter == self.__max_damage:
             self.__broken_state = True
@@ -54,15 +61,22 @@ class Rig:
             self.__damage_counter = 0
 
     def generate_asset(self):
-        list_assets = [Asset("CryptoToken", "Used to acquire or repair rigs."),
-                       Asset("Data Spike", "Used in battles."),
-                       Asset("Removable Drive", "Found in Rigs and used for extraction."),
-                       Asset("Security Chip", "Used to encrypt or decrypt assets."),
-                       Asset("Hardware Patch", "Used to upgrade rigs.")]
+        """Generates a new asset to storage."""
+        list_assets = [Asset("CryptoToken",
+                             "Used to acquire or repair rigs."),
+                       Asset("Data Spike",
+                             "Used in battles."),
+                       Asset("Removable Drive",
+                             "Found in Rigs and used for extraction."),
+                       Asset("Security Chip",
+                             "Used to encrypt or decrypt assets."),
+                       Asset("Hardware Patch",
+                             "Used to upgrade rigs.")]
         asset = random.choice(list_assets)
         self.__storage.append(asset)
 
     def store_asset(self, asset):
+        """Removes item from storage."""
         if asset.get_encrypted():
             print(f"You need to decrypt the {asset.get_name()} to move it.\n")
         else:
@@ -71,12 +85,14 @@ class Rig:
                     self.__storage.remove(item)
 
     def release_asset(self, asset):
+        """Adds item to storage."""
         if asset.get_encrypted():
             print(f"You need to decrypt the {asset.get_name()} to move it.\n")
         else:
             self.__storage.append(asset)
 
     def condition(self):
+        """Returns the condition of the rig."""
         if self.__broken_state:
             return f"Broken (Level {self.__upgrade_level})"
         elif self.__damage_counter == 0:
