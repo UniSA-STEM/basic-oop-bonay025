@@ -70,6 +70,7 @@ class Hacker:
                                 self.__inventory.remove(Asset(
                                     "Removable Drive",
                                     "Found in Rigs and used for extraction."))
+                                self.increase_trace_level()
 
     def encrypt_asset(self, asset):
         """This method encrypts an asset."""
