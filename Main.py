@@ -92,6 +92,7 @@ def test_repair():
 
     nix.launch_data_spike(titanium)
     nix.launch_data_spike(titanium)
+    nix.launch_data_spike(titanium)
     print(titanium)
 
     zion.repair_rig()
