@@ -41,3 +41,31 @@ def test_store_and_retrieve():
     nix.store_asset(Asset("CryptoToken", "Used to acquire or repair rigs."))
     nix.store_asset(Asset("Data Spike", "Used in battles."))
     print(nix)
+
+
+def test_encryption():
+    nix = Hacker("Nix")
+    nix.acquire_rig("Nova")
+    nix.encrypt_asset(Asset("Data Spike", "Used in battles."))
+
+
+# Tests the generation of assets
+def test_generate_assets():
+    nova = Rig("Nova")
+    nova.generate_asset()
+    print(nova)
+
+    nix = Hacker("Nix")
+    nix.acquire_rig("Nova")
+    nix.generate_asset()
+
+
+# Test the scan inventory method
+# Test case of item not being in inventory
+def test_scan_inventory():
+    nix = Hacker("Nix")
+    nix.acquire_rig("Nova")
+    nix.scan_inventory(Asset("Data Spike", "Used in battles."))
+    nix.retrieve_asset(Asset("Data Spike", "Used in battles."))
+    print(nix)
+    nix.scan_inventory(Asset("Data Spike", "Used in battles."))
