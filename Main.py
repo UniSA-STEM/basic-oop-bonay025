@@ -69,6 +69,7 @@ def test_scan_inventory():
 # Tests the upgrade method
 def test_upgrade_rig():
     nix = Hacker("Nix")
+    nix.upgrade_rig()
     nova = Rig("Nova")
     nix.acquire_rig(nova)
     nix.upgrade_rig()
