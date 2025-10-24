@@ -26,7 +26,7 @@ class Hacker:
         for asset in self.__inventory:
             if asset.get_name() == "CryptoToken":
                 self.__inventory.remove(asset)
-        print(f"You have acquired {self.__rig.get_name()}.\n")
+        print(f"{self.__name} has acquired {self.__rig.get_name()}.\n")
 
     def increase_trace_level(self):
         self.__trace_level += 1
@@ -34,41 +34,49 @@ class Hacker:
             self.__exposed = True
 
     def launch_data_spike(self, rig):
-        if self.__rig is None:
-            print(f"{self.__name} must acquire a rig first.")
+        if self.__exposed:
+            print(f"{self.__name} is exposed. Cannot launch data spike "
+                  f"until trace level is lowered.\n")
         else:
-            storage = []
-            for asset in self.__rig.get_storage():
-                storage.append(asset.get_name())
-            if 'Data Spike' not in storage:
-                print(f"You need a Data Spike in your Rig to launch data spike.\n")
+            if self.__rig is None:
+                print(f"{self.__name} must acquire a rig first.")
             else:
-                rig.take_hit()
-                self.retrieve_asset(Asset("Data Spike", "Used in battles."))
-                for item in self.__inventory:
-                    if item.get_name() == "Data Spike":
-                        self.__inventory.remove(item)
-                self.increase_trace_level()
+                storage = []
+                for asset in self.__rig.get_storage():
+                    storage.append(asset.get_name())
+                if 'Data Spike' not in storage:
+                    print(f"{self.__name} needs a Data Spike in your Rig to launch data spike.\n")
+                else:
+                    rig.take_hit()
+                    self.retrieve_asset(Asset("Data Spike", "Used in battles."))
+                    for item in self.__inventory:
+                        if item.get_name() == "Data Spike":
+                            self.__inventory.remove(item)
+                    self.increase_trace_level()
 
     def encrypt_asset(self, asset):
+        inventory = []
         for item in self.__inventory:
-            if item.get_name() == asset.get_name():
-                if item.get_encrypted() is False:
-                    item.set_encrypted(True)
-        for item in self.__rig.get_storage():
-            if item.get_name() == asset.get_name():
-                if item.get_encrypted() is False:
-                    item.set_encrypted(True)
+            inventory.append(item.get_name())
+        if 'Security Chip' not in inventory:
+            print(f"You need a Security chip to encrypt. \n")
+        else:
+            for item in self.__inventory:
+                if item.get_name() == asset.get_name():
+                    if item.get_encrypted() is False:
+                        item.set_encrypted(True)
 
     def decrypt_asset(self, asset):
+        inventory = []
         for item in self.__inventory:
-            if item.get_name() == asset.get_name():
-                if item.get_encrypted() is False:
-                    item.set_encrypted(True)
-        for item in self.__rig.get_storage():
-            if item.get_name() == asset.get_name():
-                if item.get_encrypted() is False:
-                    item.set_encrypted(True)
+            inventory.append(item.get_name())
+        if 'Security Chip' not in inventory:
+            print(f"You need a Security chip to encrypt. \n")
+        else:
+            for item in self.__inventory:
+                if item.get_name() == asset.get_name():
+                    if item.get_encrypted() is True:
+                        item.set_encrypted(False)
 
     def upgrade_rig(self):
         if self.__rig is None:
@@ -77,7 +85,7 @@ class Hacker:
             inventory = []
             for item in self.__inventory:
                 inventory.append(item.get_name())
-            if "Hardware Patch" not in inventory:
+            if 'Hardware Patch' not in inventory:
                 print(f"You need a Hardware Patch to upgrade. \n")
             else:
                 for item in self.__inventory:
