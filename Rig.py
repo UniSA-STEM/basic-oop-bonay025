@@ -38,7 +38,7 @@ class Rig:
             self.__broken_state = False
             self.__damage_counter = 0
         else:
-            print(f"{self.__name} is not broken. It does not need repairing.")
+            print(f"{self.__name} is not broken. It does not need repairing.\n")
 
     def upgrade(self):
         self.__upgrade_level += 1
@@ -64,7 +64,7 @@ class Rig:
 
     def store_asset(self, asset):
         if asset.get_encrypted():
-            print(f"You need to decrypt the {asset.get_name()} to move it.")
+            print(f"You need to decrypt the {asset.get_name()} to move it.\n")
         else:
             for item in self.__storage:
                 if item.get_name() == asset.get_name():
@@ -72,15 +72,15 @@ class Rig:
 
     def release_asset(self, asset):
         if asset.get_encrypted():
-            print(f"You need to decrypt the {asset.get_name()} to move it.")
+            print(f"You need to decrypt the {asset.get_name()} to move it.\n")
         else:
             self.__storage.append(asset)
 
     def condition(self):
-        if self.__damage_counter == 0:
-            return f"Pristine (Level {self.__upgrade_level})"
-        elif self.__broken_state:
+        if self.__broken_state:
             return f"Broken (Level {self.__upgrade_level})"
+        elif self.__damage_counter == 0:
+            return f"Pristine (Level {self.__upgrade_level})"
         else:
             return f"Damaged (Level {self.__upgrade_level})"
 
@@ -89,7 +89,7 @@ class Rig:
         for asset in self.__storage:
             str_storage += f"{asset} \n"
         return (f"Name: {self.__name} \n"
-                f"Condition: {self.__broken_state} {self.__damage_counter}\n"
+                f"Condition: {self.condition()}\n"
                 f"Upgrade Level: {self.__upgrade_level} \n"
                 f"---------- \n"
                 f"Storage: \n"
